@@ -17,9 +17,9 @@ Source11:	%{name}16.png
 Source12:	%{name}32.png
 Source13:	%{name}48.png
 URL:		http://www.globulation2.org
-BuildRequires:	autoconf freetype-devel oggvorbis-devel SDL-devel
+BuildRequires:	autoconf oggvorbis-devel SDL-devel fribidi-devel
 BuildRequires:	SDL_image-devel SDL_net-devel speex-devel SDL_ttf-devel
-BuildRequires:	boost-devel MesaGLU-devel desktop-file-utils
+BuildRequires:	boost-devel MesaGLU-devel
 BuildRequires:	scons
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
@@ -42,37 +42,35 @@ gameplay and an integrated map editor.
 %setup -q -n %{oname}-%{version}
 
 %build
-scons BINDIR=%{_gamesbindir} INSTALLDIR=%{_gamesdatadir}
-
-rm -f missing
-aclocal
-autoheader
-automake --add-missing
-autoconf
-%configure2_5x	--bindir=%{_gamesbindir} \
-		--datadir=%{_gamesdatadir} \
-CPPFLAGS="`pkg-config --cflags speex`"
-%make
+scons %_smp_mflags BINDIR=%{_gamesbindir} INSTALLDIR=%{_gamesdatadir} CXXFLAGS='%{optflags}'
 
 %install
 rm -rf %{buildroot}
+mkdir -p %buildroot%_gamesdatadir/%oname %buildroot%_gamesbindir
 
-%makeinstall_std
+find -name SConscript | xargs rm
+cp -a campaigns data maps scripts %buildroot%_gamesdatadir/%{oname}
+install -m755 src/%{oname} %buildroot%_gamesbindir
+
 tar -xjf %{SOURCE1} -C %{buildroot}%{_gamesdatadir}/%{oname}/data
 install %{SOURCE2} %{buildroot}%{_gamesdatadir}/%{oname}/data/fonts
-
-for d in applications pixmaps; do
-  mv %{buildroot}%{_gamesdatadir}/$d %{buildroot}%{_datadir}
-done
 
 install -m644 %{SOURCE11} -D %{buildroot}%{_miconsdir}/%{name}.png
 install -m644 %{SOURCE12} -D %{buildroot}%{_iconsdir}/%{name}.png
 install -m644 %{SOURCE13} -D %{buildroot}%{_liconsdir}/%{name}.png
 
-
-desktop-file-install	--vendor="" \
-			--remove-category="Application" \
-			--dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/*
+mkdir -p %buildroot%_datadir/applications
+cat > %buildroot%_datadir/applications/mandriva-%name.desktop << EOF
+[Desktop Entry]
+Name=Globulation2
+Comment=Globulation2 - a state of the art Real Time Strategy (RTS) game
+Exec=%_gamesbindir/%oname
+Icon=%name
+Terminal=false
+Type=Application
+StartupNotify=false
+Categories=Game;StrategyGame;
+EOF
 
 %post
 %{update_menus}
@@ -84,13 +82,11 @@ desktop-file-install	--vendor="" \
 rm -rf %{buildroot}
 
 %files
-%defattr(644,root,root,755)
+%defattr(644,root,root)
 %doc AUTHORS README TODO
 %attr(755,root,root) %{_gamesbindir}/%{oname}
-%dir %{_gamesdatadir}/%{oname}
-%{_gamesdatadir}/%{oname}/*
+%{_gamesdatadir}/%{oname}
 %{_datadir}/applications/*
-%{_datadir}/pixmaps/*
 %{_iconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
 %{_miconsdir}/%{name}.png

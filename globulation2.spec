@@ -47,7 +47,6 @@ gameplay and an integrated map editor.
 %patch1 -p0
 
 chmod -x {src/*.h,src/*.cpp,libgag/include/*.h,gnupg/*,libgag/src/*.cpp,scripts/*,data/*.txt,campaigns/*,AUTHORS,COPYING,README,TODO}
-sed -i 's|boost_thread|boost_thread-mt|' SConstruct
 
 %build
 scons %_smp_mflags BINDIR=%{_gamesbindir} INSTALLDIR=%{_gamesdatadir}/%{oname} CXXFLAGS='%{optflags}'

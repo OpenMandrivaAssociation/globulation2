@@ -50,7 +50,7 @@ chmod -x {src/*.h,src/*.cpp,libgag/include/*.h,gnupg/*,libgag/src/*.cpp,scripts/
 sed -i 's|boost_thread|boost_thread-mt|' SConstruct
 
 %build
-scons %_smp_mflags BINDIR=%{_gamesbindir} INSTALLDIR=%{_gamesdatadir} CXXFLAGS='%{optflags}'
+scons %_smp_mflags BINDIR=%{_gamesbindir} INSTALLDIR=%{_gamesdatadir}/%{oname} CXXFLAGS='%{optflags}'
 
 %install
 #---- FEDORA
@@ -64,9 +64,9 @@ find $RPM_BUILD_ROOT -name SConscript -exec rm -f {} \;
 
 for f in 128x128 16x16 24x24 32x32 48x48 64x64; do
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/$f/apps
-mv $RPM_BUILD_ROOT%{_datadir}/%{oname}/data/icons/glob2-icon-$f.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/$f/apps/%{name}.png
+mv $RPM_BUILD_ROOT%{_gamesdatadir}/%{oname}/data/icons/glob2-icon-$f.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/$f/apps/%{name}.png
 done
-rm -rf $RPM_BUILD_ROOT%{_datadir}/%{oname}/data/icons
+rm -rf $RPM_BUILD_ROOT%{_gamesdatadir}/%{oname}/data/icons
 #---- FEDORA
 
 tar -xjf %{SOURCE1} -C %{buildroot}%{_gamesdatadir}/%{oname}/data

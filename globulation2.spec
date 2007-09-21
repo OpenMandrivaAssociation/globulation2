@@ -13,9 +13,6 @@ Group:		Games/Strategy
 Source0:	http://dl.sv.nongnu.org/releases/%{oname}/%{version}/%{oname}-%{version}.tar.gz
 Source1:	http://moneo.phear.org/~nct/glob2gfx.tar.bz2
 Source2:	http://goldeneye.sked.ch/~smagnena/sans.ttf
-Source11:	%{name}16.png
-Source12:	%{name}32.png
-Source13:	%{name}48.png
 # fwang: patch0,1 from fedora
 Patch0:		glob2-texts.pl.patch
 Patch1:		glob2-desktopfileinstall.patch
@@ -24,6 +21,7 @@ BuildRequires:	autoconf oggvorbis-devel SDL-devel fribidi-devel
 BuildRequires:	SDL_image-devel SDL_net-devel speex-devel SDL_ttf-devel
 BuildRequires:	boost-devel MesaGLU-devel
 BuildRequires:	scons
+Provides:	%{oname} = %version-%release
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -49,7 +47,7 @@ gameplay and an integrated map editor.
 chmod -x {src/*.h,src/*.cpp,libgag/include/*.h,gnupg/*,libgag/src/*.cpp,scripts/*,data/*.txt,campaigns/*,AUTHORS,COPYING,README,TODO}
 
 %build
-scons %_smp_mflags BINDIR=%{_gamesbindir} INSTALLDIR=%{_gamesdatadir}/%{oname} CXXFLAGS='%{optflags}'
+scons %_smp_mflags BINDIR=%{_gamesbindir} INSTALLDIR=%{_gamesdatadir} CXXFLAGS='%{optflags}'
 
 %install
 #---- FEDORA
@@ -71,9 +69,9 @@ rm -rf $RPM_BUILD_ROOT%{_gamesdatadir}/%{oname}/data/icons
 tar -xjf %{SOURCE1} -C %{buildroot}%{_gamesdatadir}/%{oname}/data
 install %{SOURCE2} %{buildroot}%{_gamesdatadir}/%{oname}/data/fonts
 
-install -m644 %{SOURCE11} -D %{buildroot}%{_miconsdir}/%{name}.png
-install -m644 %{SOURCE12} -D %{buildroot}%{_iconsdir}/%{name}.png
-install -m644 %{SOURCE13} -D %{buildroot}%{_liconsdir}/%{name}.png
+install -m644 data/icons/glob2-icon-16x16.png -D %{buildroot}%{_miconsdir}/%{name}.png
+install -m644 data/icons/glob2-icon-32x32.png -D %{buildroot}%{_iconsdir}/%{name}.png
+install -m644 data/icons/glob2-icon-48x48.png -D %{buildroot}%{_liconsdir}/%{name}.png
 
 mkdir -p %buildroot%_datadir/applications
 cat > %buildroot%_datadir/applications/mandriva-%name.desktop << EOF

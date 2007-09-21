@@ -16,6 +16,9 @@ Source2:	http://goldeneye.sked.ch/~smagnena/sans.ttf
 Source11:	%{name}16.png
 Source12:	%{name}32.png
 Source13:	%{name}48.png
+# fwang: patch0,1 from fedora
+Patch0:		glob2-texts.pl.patch
+Patch1:		glob2-desktopfileinstall.patch
 URL:		http://www.globulation2.org
 BuildRequires:	autoconf oggvorbis-devel SDL-devel fribidi-devel
 BuildRequires:	SDL_image-devel SDL_net-devel speex-devel SDL_ttf-devel
@@ -40,17 +43,31 @@ gameplay and an integrated map editor.
 
 %prep
 %setup -q -n %{oname}-%{version}
+%patch0 -p0
+%patch1 -p0
+
+chmod -x {src/*.h,src/*.cpp,libgag/include/*.h,gnupg/*,libgag/src/*.cpp,scripts/*,data/*.txt,campaigns/*,AUTHORS,COPYING,README,TODO}
+sed -i 's|boost_thread|boost_thread-mt|' SConstruct
 
 %build
 scons %_smp_mflags BINDIR=%{_gamesbindir} INSTALLDIR=%{_gamesdatadir} CXXFLAGS='%{optflags}'
 
 %install
-rm -rf %{buildroot}
-mkdir -p %buildroot%_gamesdatadir/%oname %buildroot%_gamesbindir
+#---- FEDORA
+mkdir -p $RPM_BUILD_ROOT%{_gamesdatadir}/%{oname}/{data/fonts,data/gfx/cursor,data/gui,data/icons,data/zik,maps,scripts,campaigns}
+cp -rp {data,campaigns,scripts,maps} $RPM_BUILD_ROOT%{_gamesdatadir}/%{oname}/
 
-find -name SConscript | xargs rm
-cp -a campaigns data maps scripts %buildroot%_gamesdatadir/%{oname}
-install -m755 src/%{oname} %buildroot%_gamesbindir
+mkdir -p $RPM_BUILD_ROOT%{_gamesbindir}
+cp src/glob2 $RPM_BUILD_ROOT%{_gamesbindir}/
+
+find $RPM_BUILD_ROOT -name SConscript -exec rm -f {} \;
+
+for f in 128x128 16x16 24x24 32x32 48x48 64x64; do
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/$f/apps
+mv $RPM_BUILD_ROOT%{_datadir}/%{oname}/data/icons/glob2-icon-$f.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/$f/apps/%{name}.png
+done
+rm -rf $RPM_BUILD_ROOT%{_datadir}/%{oname}/data/icons
+#---- FEDORA
 
 tar -xjf %{SOURCE1} -C %{buildroot}%{_gamesdatadir}/%{oname}/data
 install %{SOURCE2} %{buildroot}%{_gamesdatadir}/%{oname}/data/fonts
@@ -74,9 +91,11 @@ EOF
 
 %post
 %{update_menus}
+%update_icon_cache hicolor
 
 %postun
 %{clean_menus}
+%clean_icon_cache hicolor
 
 %clean
 rm -rf %{buildroot}
@@ -90,3 +109,4 @@ rm -rf %{buildroot}
 %{_iconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
 %{_miconsdir}/%{name}.png
+%{_datadir}/icons/hicolor/*/apps/%{name}.png

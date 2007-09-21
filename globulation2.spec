@@ -106,4 +106,4 @@ rm -rf %{buildroot}
 %{_iconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
 %{_miconsdir}/%{name}.png
-%{_datadir}/icons/hicolor/*/apps/%{name}.png
+%{_iconsdir}/hicolor/*/apps/%{name}.png

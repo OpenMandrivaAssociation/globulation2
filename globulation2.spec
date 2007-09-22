@@ -47,27 +47,31 @@ gameplay and an integrated map editor.
 chmod -x {src/*.h,src/*.cpp,libgag/include/*.h,gnupg/*,libgag/src/*.cpp,scripts/*,data/*.txt,campaigns/*,AUTHORS,COPYING,README,TODO}
 
 %build
-scons %_smp_mflags BINDIR=%{_gamesbindir} INSTALLDIR=%{_gamesdatadir} CXXFLAGS='%{optflags}'
+# data should be installed into datadir rather than gamesdatadir,
+# otherwise it cannot find them :(
+scons %_smp_mflags BINDIR=%{_gamesbindir} INSTALLDIR=%{_datadir} CXXFLAGS='%{optflags}'
 
 %install
 #---- FEDORA
-mkdir -p $RPM_BUILD_ROOT%{_gamesdatadir}/%{oname}/{data/fonts,data/gfx/cursor,data/gui,data/icons,data/zik,maps,scripts,campaigns}
-cp -rp {data,campaigns,scripts,maps} $RPM_BUILD_ROOT%{_gamesdatadir}/%{oname}/
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{oname}/{data/fonts,data/gfx/cursor,data/gui,data/icons,data/zik,maps,scripts,campaigns}
+cp -r {data,campaigns,scripts,maps} $RPM_BUILD_ROOT%{_datadir}/%{oname}/
+# AUTHORS needs to be there for credits
+cp AUTHORS $RPM_BUILD_ROOT%{_datadir}/%{oname}/
 
 mkdir -p $RPM_BUILD_ROOT%{_gamesbindir}
-cp src/glob2 $RPM_BUILD_ROOT%{_gamesbindir}/
+install -m755 src/glob2 $RPM_BUILD_ROOT%{_gamesbindir}/
 
 find $RPM_BUILD_ROOT -name SConscript -exec rm -f {} \;
 
 for f in 128x128 16x16 24x24 32x32 48x48 64x64; do
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/$f/apps
-mv $RPM_BUILD_ROOT%{_gamesdatadir}/%{oname}/data/icons/glob2-icon-$f.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/$f/apps/%{name}.png
+mv $RPM_BUILD_ROOT%{_datadir}/%{oname}/data/icons/glob2-icon-$f.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/$f/apps/%{name}.png
 done
-rm -rf $RPM_BUILD_ROOT%{_gamesdatadir}/%{oname}/data/icons
+rm -rf $RPM_BUILD_ROOT%{_datadir}/%{oname}/data/icons
 #---- FEDORA
 
-tar -xjf %{SOURCE1} -C %{buildroot}%{_gamesdatadir}/%{oname}/data
-install %{SOURCE2} %{buildroot}%{_gamesdatadir}/%{oname}/data/fonts
+tar -xjf %{SOURCE1} -C %{buildroot}%{_datadir}/%{oname}/data
+install %{SOURCE2} %{buildroot}%{_datadir}/%{oname}/data/fonts
 
 install -m644 data/icons/glob2-icon-16x16.png -D %{buildroot}%{_miconsdir}/%{name}.png
 install -m644 data/icons/glob2-icon-32x32.png -D %{buildroot}%{_iconsdir}/%{name}.png
@@ -98,10 +102,10 @@ EOF
 rm -rf %{buildroot}
 
 %files
-%defattr(644,root,root)
+%defattr(-,root,root)
 %doc AUTHORS README TODO
-%attr(755,root,root) %{_gamesbindir}/%{oname}
-%{_gamesdatadir}/%{oname}
+%{_gamesbindir}/%{oname}
+%{_datadir}/%{oname}
 %{_datadir}/applications/*
 %{_iconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png

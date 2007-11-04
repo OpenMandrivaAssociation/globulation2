@@ -1,7 +1,7 @@
 %define	oname	glob2
 %define	name	globulation2
 %define	version	0.9.1
-%define	release	%mkrel 2
+%define	release	%mkrel 3
 %define	Summary	Globulation2 - a state of the art Real Time Strategy (RTS) game
 
 Summary:	%{Summary}

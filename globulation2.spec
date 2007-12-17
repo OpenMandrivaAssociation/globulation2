@@ -22,7 +22,6 @@ BuildRequires:	SDL_image-devel SDL_net-devel speex-devel SDL_ttf-devel
 BuildRequires:	boost-devel MesaGLU-devel
 BuildRequires:	scons
 Provides:	%{oname} = %version-%release
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 Glob2 is a state of the art Real Time Strategy (RTS) game. It is free

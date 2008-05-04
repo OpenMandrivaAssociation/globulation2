@@ -2,7 +2,7 @@
 
 Summary:	Globulation2 - a state of the art Real Time Strategy (RTS) game
 Name:		globulation2
-Version:	0.9.2
+Version:	0.9.3
 Release:	%mkrel 1
 License:	GPLv3
 Group:		Games/Strategy
@@ -47,7 +47,7 @@ chmod -x {src/*.h,src/*.cpp,libgag/include/*.h,gnupg/*,libgag/src/*.cpp,scripts/
 %build
 # data should be installed into datadir rather than gamesdatadir,
 # otherwise it cannot find them :(
-scons %_smp_mflags BINDIR="%{_gamesbindir}" INSTALLDIR="%{_datadir}" CXXFLAGS="%{optflags}"
+scons %{_smp_mflags} BINDIR="%{_gamesbindir}" INSTALLDIR="%{_datadir}" CXXFLAGS="%{optflags}"
 
 %install
 #---- FEDORA

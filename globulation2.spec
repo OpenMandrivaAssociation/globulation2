@@ -10,8 +10,6 @@ URL:		http://www.globulation2.org
 Source0:	http://dl.sv.nongnu.org/releases/%{oname}/%{version}/%{oname}-%{version}.tar.bz2
 Source1:	http://moneo.phear.org/~nct/glob2gfx.tar.bz2
 Source2:	http://goldeneye.sked.ch/~smagnena/sans.ttf
-# fwang: patch0 from fedora
-Patch0:		glob2-texts.pl.patch
 BuildRequires:	oggvorbis-devel
 BuildRequires:	SDL-devel
 BuildRequires:	fribidi-devel
@@ -40,7 +38,6 @@ gameplay and an integrated map editor.
 
 %prep
 %setup -q -n %{oname}-%{version}
-%patch0 -p0
 
 chmod -x {src/*.h,src/*.cpp,libgag/include/*.h,gnupg/*,libgag/src/*.cpp,scripts/*,data/*.txt,campaigns/*,AUTHORS,COPYING,README}
 

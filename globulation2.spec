@@ -7,8 +7,8 @@ Release:	%mkrel 1
 License:	GPLv3
 Group:		Games/Strategy
 URL:		http://www.globulation2.org
+Patch0:		buildfix.patch
 Source0:	http://dl.sv.nongnu.org/releases/%{oname}/%{version}/%{oname}-%{version}.tar.bz2
-Source1:	http://moneo.phear.org/~nct/glob2gfx.tar.bz2
 Source2:	http://goldeneye.sked.ch/~smagnena/sans.ttf
 BuildRequires:	oggvorbis-devel
 BuildRequires:	SDL-devel
@@ -38,6 +38,7 @@ gameplay and an integrated map editor.
 
 %prep
 %setup -q -n %{oname}-%{version}
+%patch0 -p0
 
 chmod -x {src/*.h,src/*.cpp,libgag/include/*.h,gnupg/*,libgag/src/*.cpp,scripts/*,data/*.txt,campaigns/*,AUTHORS,COPYING,README}
 
@@ -69,7 +70,6 @@ done
 rm -rf %{buildroot}%{_datadir}/%{oname}/data/icons
 #---- FEDORA
 
-tar -xjf %{SOURCE1} -C %{buildroot}%{_datadir}/%{oname}/data
 install %{SOURCE2} %{buildroot}%{_datadir}/%{oname}/data/fonts
 
 mkdir -p %{buildroot}%{_datadir}/applications

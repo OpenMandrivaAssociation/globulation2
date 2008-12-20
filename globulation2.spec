@@ -3,7 +3,7 @@
 Summary:	Globulation2 - a state of the art Real Time Strategy (RTS) game
 Name:		globulation2
 Version:	0.9.3
-Release:	%mkrel 3
+Release:	%mkrel 4
 License:	GPLv3
 Group:		Games/Strategy
 URL:		http://www.globulation2.org

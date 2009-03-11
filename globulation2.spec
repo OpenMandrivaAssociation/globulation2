@@ -52,7 +52,7 @@ mkdir -p %{buildroot}%{_datadir}/%{oname}/{data/fonts,data/gfx/cursor,data/gui,d
 cp -r {data,campaigns,scripts,maps} %{buildroot}%{_datadir}/%{oname}/
 
 # AUTHORS needs to be there for credits
-cp AUTHORS %{buildroot}%{_datadir}/%{oname}/
+#cp AUTHORS %{buildroot}%{_datadir}/%{oname}/
 
 mkdir -p %{buildroot}%{_gamesbindir}
 install -m755 src/glob2 %{buildroot}%{_gamesbindir}/

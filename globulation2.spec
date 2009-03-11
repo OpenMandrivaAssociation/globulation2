@@ -2,13 +2,12 @@
 
 Summary:	Globulation2 - a state of the art Real Time Strategy (RTS) game
 Name:		globulation2
-Version:	0.9.3
-Release:	%mkrel 4
+Version:	0.9.4
+Release:	%mkrel 1
 License:	GPLv3
 Group:		Games/Strategy
 URL:		http://www.globulation2.org
-Patch0:		buildfix.patch
-Source0:	http://dl.sv.nongnu.org/releases/%{oname}/%{version}/%{oname}-%{version}.tar.bz2
+Source0:	http://dl.sv.nongnu.org/releases/%{oname}/%{version}/%{oname}-%{version}.tar.gz
 Source2:	http://goldeneye.sked.ch/~smagnena/sans.ttf
 BuildRequires:	oggvorbis-devel
 BuildRequires:	SDL-devel
@@ -19,6 +18,7 @@ BuildRequires:	speex-devel
 BuildRequires:	SDL_ttf-devel
 BuildRequires:	boost-devel MesaGLU-devel
 BuildRequires:	scons
+BuildRequires:	portaudio-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -38,14 +38,13 @@ gameplay and an integrated map editor.
 
 %prep
 %setup -q -n %{oname}-%{version}
-%patch0 -p0
 
-chmod -x {src/*.h,src/*.cpp,libgag/include/*.h,gnupg/*,libgag/src/*.cpp,scripts/*,data/*.txt,campaigns/*,AUTHORS,COPYING,README}
+chmod -x {src/*.h,src/*.cpp,libgag/include/*.h,gnupg/*,libgag/src/*.cpp,scripts/*,data/*.txt,campaigns/*,COPYING,README}
 
 %build
 # data should be installed into datadir rather than gamesdatadir,
 # otherwise it cannot find them :(
-scons %{_smp_mflags} BINDIR="%{_gamesbindir}" INSTALLDIR="%{_datadir}" CXXFLAGS="%{optflags}"
+scons %{_smp_mflags} BINDIR="%{_gamesbindir}" INSTALLDIR="%{_datadir}" CXXFLAGS="%{optflags}" --portaudio=true
 
 %install
 #---- FEDORA
@@ -102,7 +101,7 @@ rm -rf %{buildroot}
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS README
+%doc README
 %attr(755,root,root) %{_gamesbindir}/%{oname}
 %{_datadir}/%{oname}
 %{_datadir}/applications/*

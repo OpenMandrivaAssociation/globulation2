@@ -2,13 +2,14 @@
 
 Summary:	Globulation2 - a state of the art Real Time Strategy (RTS) game
 Name:		globulation2
-Version:	0.9.4
+Version:	0.9.4.1
 Release:	%mkrel 1
 License:	GPLv3
 Group:		Games/Strategy
 URL:		http://www.globulation2.org
 Source0:	http://dl.sv.nongnu.org/releases/%{oname}/%{version}/%{oname}-%{version}.tar.gz
 Source2:	http://goldeneye.sked.ch/~smagnena/sans.ttf
+Patch0:		glob2-0.9.4.1-gcc44.patch
 BuildRequires:	oggvorbis-devel
 BuildRequires:	SDL-devel
 BuildRequires:	fribidi-devel
@@ -38,6 +39,7 @@ gameplay and an integrated map editor.
 
 %prep
 %setup -q -n %{oname}-%{version}
+%patch0 -p0
 
 chmod -x {src/*.h,src/*.cpp,libgag/include/*.h,gnupg/*,libgag/src/*.cpp,scripts/*,data/*.txt,campaigns/*,COPYING,README}
 

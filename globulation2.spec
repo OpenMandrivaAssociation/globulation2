@@ -3,13 +3,15 @@
 Summary:	Globulation2 - a state of the art Real Time Strategy (RTS) game
 Name:		globulation2
 Version:	0.9.4.4
-Release:	%mkrel 4
+Release:	5
 License:	GPLv3
 Group:		Games/Strategy
 URL:		http://www.globulation2.org
 Source0:	http://dl.sv.nongnu.org/releases/%{oname}/%{version}/%{oname}-%{version}.tar.gz
 Source2:	http://goldeneye.sked.ch/~smagnena/sans.ttf
 Patch0:		glob2-0.9.4.1-gcc44.patch
+
+BuildRequires:	scons
 BuildRequires:	oggvorbis-devel
 BuildRequires:	SDL-devel
 BuildRequires:	fribidi-devel
@@ -17,10 +19,9 @@ BuildRequires:	SDL_image-devel
 BuildRequires:	SDL_net-devel
 BuildRequires:	speex-devel
 BuildRequires:	SDL_ttf-devel
-BuildRequires:	boost-devel MesaGLU-devel
-BuildRequires:	scons
+BuildRequires:	boost-devel
+BuildRequires:	MesaGLU-devel
 BuildRequires:	portaudio-devel
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 Glob2 is a state of the art Real Time Strategy (RTS) game. It is free
@@ -86,25 +87,10 @@ StartupNotify=false
 Categories=Game;StrategyGame;
 EOF
 
-%if %mdkversion < 200900
-%post
-%{update_menus}
-%update_icon_cache hicolor
-%endif
-
-%if %mdkversion < 200900
-%postun
-%{clean_menus}
-%clean_icon_cache hicolor
-%endif
-
-%clean
-rm -rf %{buildroot}
-
 %files
-%defattr(644,root,root,755)
 %doc README
-%attr(755,root,root) %{_gamesbindir}/%{oname}
+%{_gamesbindir}/%{oname}
 %{_datadir}/%{oname}
 %{_datadir}/applications/*
 %{_iconsdir}/hicolor/*/apps/%{name}.png
+

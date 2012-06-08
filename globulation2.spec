@@ -12,16 +12,16 @@ Source2:	http://goldeneye.sked.ch/~smagnena/sans.ttf
 Patch0:		glob2-0.9.4.1-gcc44.patch
 
 BuildRequires:	scons
-BuildRequires:	oggvorbis-devel
-BuildRequires:	SDL-devel
-BuildRequires:	fribidi-devel
-BuildRequires:	SDL_image-devel
-BuildRequires:	SDL_net-devel
-BuildRequires:	speex-devel
-BuildRequires:	SDL_ttf-devel
 BuildRequires:	boost-devel
-BuildRequires:	MesaGLU-devel
-BuildRequires:	portaudio-devel
+BuildRequires:	pkgconfig(fribidi)
+BuildRequires:	pkgconfig(glu)
+BuildRequires:	pkgconfig(ogg)
+BuildRequires:	pkgconfig(portaudio-2.0)
+BuildRequires:	pkgconfig(sdl)
+BuildRequires:	pkgconfig(SDL_image)
+BuildRequires:	pkgconfig(SDL_net)
+BuildRequires:	pkgconfig(SDL_ttf)
+BuildRequires:	pkgconfig(speex)
 
 %description
 Glob2 is a state of the art Real Time Strategy (RTS) game. It is free

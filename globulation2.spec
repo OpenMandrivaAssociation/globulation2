@@ -22,6 +22,7 @@ BuildRequires:	pkgconfig(SDL_image)
 BuildRequires:	pkgconfig(SDL_net)
 BuildRequires:	pkgconfig(SDL_ttf)
 BuildRequires:	pkgconfig(speex)
+BuildRequires:	pkgconfig(vorbis)
 
 %description
 Glob2 is a state of the art Real Time Strategy (RTS) game. It is free

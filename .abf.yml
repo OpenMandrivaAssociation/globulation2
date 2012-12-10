@@ -1,3 +1,5 @@
+removed_sources:
+  glob2-0.9.4.4.tar.gz: 14aa8d840ef5f95a9af591789082fe2322fa8cad
 sources:
-  "glob2-0.9.4.4.tar.gz:"	14aa8d840ef5f95a9af591789082fe2322fa8cad
-  "sans.ttf:"	f659aba984fbd00dc774620e78af3b719e499aad
+  glob2-4236.tar.xz: 9f6f1091554f93bc62775331973be09a87656447
+  sans.ttf: f659aba984fbd00dc774620e78af3b719e499aad

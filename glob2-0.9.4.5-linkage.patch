@@ -1,0 +1,45 @@
+--- glob2/SConstruct.bero	2012-12-05 14:16:47.032275661 +0100
++++ glob2/SConstruct	2012-12-05 14:19:08.636884970 +0100
+@@ -122,25 +122,34 @@ def configure(env, server_only):
+ 			missing.append("regex")
+ 
+     boost_thread = ''
+-    if conf.CheckLib("boost_thread") and conf.CheckCXXHeader("boost/thread/thread.hpp"):
+-        boost_thread="boost_thread"
+-    elif conf.CheckLib("boost_thread-mt") and conf.CheckCXXHeader("boost/thread/thread.hpp"):
++    if conf.CheckLib("boost_thread-mt") and conf.CheckCXXHeader("boost/thread/thread.hpp"):
+         boost_thread="boost_thread-mt"
++    elif conf.CheckLib("boost_thread") and conf.CheckCXXHeader("boost/thread/thread.hpp"):
++        boost_thread="boost_thread"
+     else:
+         print "Could not find libboost_thread or libboost_thread-mt or boost/thread/thread.hpp"
+         missing.append("libboost_thread")
+     env.Append(LIBS=[boost_thread])
+     
+     boost_date_time = ''
+-    if conf.CheckLib("boost_date_time") and conf.CheckCXXHeader("boost/date_time/posix_time/posix_time.hpp"):
+-        boost_thread="boost_thread"
+-    elif conf.CheckLib("boost_date_time-mt") and conf.CheckCXXHeader("boost/date_time/posix_time/posix_time.hpp"):
+-        boost_thread="boost_thread-mt"
++    if conf.CheckLib("boost_date_time-mt") and conf.CheckCXXHeader("boost/date_time/posix_time/posix_time.hpp"):
++        boost_date_time="boost_date_time-mt"
++    elif conf.CheckLib("boost_date_time") and conf.CheckCXXHeader("boost/date_time/posix_time/posix_time.hpp"):
++        boost_date_time="boost_date_time"
+     else:
+-        print "Could not find libboost_date_time or libboost_date_time-mt or boost/thread/thread.hpp"
++        print "Could not find libboost_date_time or libboost_date_time-mt or boost/date_time/posix_time/posix_time.hpp"
+         missing.append("libboost_date_time")
+     env.Append(LIBS=[boost_date_time])
+     
++    boost_system = ''
++    if conf.CheckLib("boost_system-mt"):
++        boost_system="boost_system-mt"
++    elif conf.CheckLib("boost_system"):
++        boost_system="boost_system"
++    else:
++        print "Could not find libboost_system or libboost_system-mt"
++        missing.append("libboost_system")
++    env.Append(LIBS=[boost_system])
+ 
+     if not conf.CheckCXXHeader("boost/shared_ptr.hpp"):
+         print "Could not find boost/shared_ptr.hpp"

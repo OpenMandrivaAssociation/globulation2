@@ -1,7 +1,7 @@
 %define scmrev 4236
 %define	oname	glob2
 
-Summary:	Globulation2 - a state of the art Real Time Strategy (RTS) game
+Summary:	- a state of the art Real Time Strategy (RTS) game
 Name:		globulation2
 Version:	0.9.4.5
 %if 0%scmrev

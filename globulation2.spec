@@ -1,14 +1,14 @@
 %define scmrev 4236
 %define	oname	glob2
 
-Summary:	- a state of the art Real Time Strategy (RTS) game
+Summary:	A state of the art Real Time Strategy (RTS) game
 Name:		globulation2
 Version:	0.9.4.5
 %if 0%scmrev
 Release:	0.%scmrev.1
 Source0:	%oname-%scmrev.tar.xz
 %else
-Release:	1
+Release:	2
 Source0:	http://dl.sv.nongnu.org/releases/%{oname}/%{version}/%{oname}-%{version}.tar.gz
 %endif
 License:	GPLv3

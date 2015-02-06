@@ -8,7 +8,7 @@ Version:	0.9.4.5
 Release:	0.%scmrev.1
 Source0:	%oname-%scmrev.tar.xz
 %else
-Release:	2
+Release:	3
 Source0:	http://dl.sv.nongnu.org/releases/%{oname}/%{version}/%{oname}-%{version}.tar.gz
 %endif
 License:	GPLv3

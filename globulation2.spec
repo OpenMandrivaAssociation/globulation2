@@ -13,7 +13,7 @@ Source0:	http://dl.sv.nongnu.org/releases/%{oname}/%{version}/%{oname}-%{version
 %endif
 License:	GPLv3
 Group:		Games/Strategy
-URL:		http://www.globulation2.org
+URL:		https://www.globulation2.org
 Source2:	http://goldeneye.sked.ch/~smagnena/sans.ttf
 Patch0:		glob2-0.9.4.1-gcc44.patch
 Patch1:		glob2-0.9.4.5-linkage.patch
